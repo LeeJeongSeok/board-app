@@ -94,7 +94,7 @@ public class PostsService {
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (isSameUser(postsId, loginUser)) {
+		if (posts.getUser().getId() == user.getId()) {
 			posts.setUseYn("N");
 			posts.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
 
@@ -104,6 +104,10 @@ public class PostsService {
 		}
 	}
 
+	/**
+	 * 아직 적용전 (2023.02.17)
+	 * update/delete 시 현재 로그인 한 유저와 게시판을 작성한 유저를 비교하는 로직이 중복되어 별도로 빼놓은 로직
+	 */
 	private boolean isSameUser(Long postsId, String loginUser) {
 
 		// 게시글 가져오기
