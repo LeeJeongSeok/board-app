@@ -21,7 +21,6 @@ public class CreatePosts {
 
 		@NotBlank
 		private String content;
-		private User user;
 
 	}
 

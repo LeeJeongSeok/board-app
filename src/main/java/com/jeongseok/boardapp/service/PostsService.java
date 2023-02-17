@@ -29,13 +29,10 @@ public class PostsService {
 		// 로그인한 유저 정보 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		// 요청에 Setting
-		request.setUser(user);
-
 		postsRepository.save(Posts.builder()
 				.title(request.getTitle())
 				.content(request.getContent())
-				.user(request.getUser())
+				.user(user)
 				.useYn("Y")
 			.build());
 	}
