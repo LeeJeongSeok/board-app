@@ -9,15 +9,15 @@
 <th:block th:replace="fragment/navigation :: naviFragemnt"></th:block>
 
 <div class="container">
-  <form th:action="@{/posts/{id}(id=${posts.id})}" th:method="patch">
+  <form th:action="@{/post/{id}(id=${post.id})}" th:method="patch">
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">제목</label>
-      <input type="text" class="form-control" name="title" id="exampleFormControlInput1" th:value="${posts.title}">
+      <input type="text" class="form-control" name="title" id="exampleFormControlInput1" th:value="${post.title}">
       <span style="color:red" th:text="${title}"></span>
     </div>
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-      <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="5" th:text="${posts.content}"></textarea>
+      <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="5" th:text="${post.content}"></textarea>
       <span style="color:red" th:text="${content}"></span>
     </div>
 
@@ -26,7 +26,7 @@
     </div>
   </form>
 
-  <form th:action="@{/posts/{id}(id=${posts.id})}" th:method="delete">
+  <form th:action="@{/post/{id}(id=${post.id})}" th:method="delete">
     <button type="submit" class="btn btn-danger mb-3">글 삭제하기</button>
   </form>
 </div>

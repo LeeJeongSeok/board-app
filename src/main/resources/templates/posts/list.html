@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <tr th:each="post : ${list}">
-      <th scope="row"><a th:href="'/posts/' + ${post.id}" th:text="${post.id}">1</a></th>
+      <th scope="row"><a th:href="'/post/' + ${post.id}" th:text="${post.id}">1</a></th>
       <td th:text="${post.title}"></td>
       <td th:text="${post.getUser().getId()}"></td>
       <td th:text="${post.createdAt}"></td>
@@ -30,7 +30,7 @@
   </table>
 
   <div class="mb-3">
-    <button type="button" class="btn btn-primary mb-3" th:onclick="|location.href='@{/posts}'|">글 작성하기</button>
+    <button type="button" class="btn btn-primary mb-3" th:onclick="|location.href='@{/post}'|">글 작성하기</button>
   </div>
 </div>
 

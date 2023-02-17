@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostsInfo {
+public class PostInfo {
 
 	private Long id;
 	private String title;

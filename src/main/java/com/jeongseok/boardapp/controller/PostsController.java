@@ -1,10 +1,10 @@
 package com.jeongseok.boardapp.controller;
 
-import com.jeongseok.boardapp.dto.CreatePosts;
-import com.jeongseok.boardapp.dto.PostsDto;
-import com.jeongseok.boardapp.dto.PostsInfo;
-import com.jeongseok.boardapp.dto.UpdatePosts;
-import com.jeongseok.boardapp.service.PostsService;
+import com.jeongseok.boardapp.dto.CreatePost;
+import com.jeongseok.boardapp.dto.PostDto;
+import com.jeongseok.boardapp.dto.PostInfo;
+import com.jeongseok.boardapp.dto.UpdatePost;
+import com.jeongseok.boardapp.service.PostService;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -26,21 +26,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class PostsController {
 
-	private final PostsService postsService;
+	private final PostService postService;
 
 	@GetMapping("/")
 	public String list(Model model) {
 
-		List<PostsInfo> postsInfo = postsService.getPostsByUseFlag().stream()
-			.map(postsDto -> PostsInfo.builder()
-				.id(postsDto.getId())
-				.title(postsDto.getTitle())
-				.user(postsDto.getUser())
-				.createdAt(postsDto.getCreatedAt())
+		List<PostInfo> postInfo = postService.getPostsByUseFlag().stream()
+			.map(postDto -> PostInfo.builder()
+				.id(postDto.getId())
+				.title(postDto.getTitle())
+				.user(postDto.getUser())
+				.createdAt(postDto.getCreatedAt())
 				.build())
 			.collect(Collectors.toList());
 
-		model.addAttribute("list", postsInfo);
+		model.addAttribute("list", postInfo);
 
 		return "posts/list";
 	}
@@ -51,7 +51,7 @@ public class PostsController {
 	}
 
 	@PostMapping("/posts")
-	public String writePosts(@Valid CreatePosts.Request request, Errors errors, Principal principal, Model model) {
+	public String writePosts(@Valid CreatePost.Request request, Errors errors, Principal principal, Model model) {
 		if (errors.hasErrors()) {
 			Map<String, String> validateResult = validationRequestValue(errors);
 
@@ -62,7 +62,7 @@ public class PostsController {
 			return "posts/write";
 		}
 
-		postsService.writePosts(request, principal.getName());
+		postService.writePosts(request, principal.getName());
 
 		return "redirect:/";
 	}
@@ -70,21 +70,21 @@ public class PostsController {
 	@GetMapping("/posts/{id}")
 	public String detailPostsForm(@PathVariable Long id, Model model) {
 
-		PostsDto postsDto = postsService.detailPosts(id);
+		PostDto postDto = postService.detailPosts(id);
 
-		PostsInfo postsInfo = PostsInfo.builder()
-			.id(postsDto.getId())
-			.title(postsDto.getTitle())
-			.content(postsDto.getContent())
+		PostInfo postInfo = PostInfo.builder()
+			.id(postDto.getId())
+			.title(postDto.getTitle())
+			.content(postDto.getContent())
 			.build();
 
-		model.addAttribute("posts", postsInfo);
+		model.addAttribute("posts", postInfo);
 
 		return "posts/detail";
 	}
 
 	@PatchMapping("/posts/{id}")
-	public String updatePosts(@PathVariable Long id, @Valid UpdatePosts.Request request, Errors errors, Model model, Principal principal) {
+	public String updatePosts(@PathVariable Long id, @Valid UpdatePost.Request request, Errors errors, Model model, Principal principal) {
 		if (errors.hasErrors()) {
 			Map<String, String> validateResult = validationRequestValue(errors);
 
@@ -95,14 +95,14 @@ public class PostsController {
 			return "posts/detail";
 		}
 
-		postsService.updatePosts(id, principal.getName(), request);
+		postService.updatePosts(id, principal.getName(), request);
 
 		return "redirect:/";
 	}
 
 	@DeleteMapping("/posts/{id}")
 	public String deletePosts(@PathVariable Long id, Principal principal) {
-		postsService.deletePosts(id, principal.getName());
+		postService.deletePosts(id, principal.getName());
 
 		return "redirect:/";
 	}

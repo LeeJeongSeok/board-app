@@ -1,11 +1,11 @@
 package com.jeongseok.boardapp.service;
 
-import com.jeongseok.boardapp.dto.CreatePosts;
-import com.jeongseok.boardapp.dto.PostsDto;
-import com.jeongseok.boardapp.dto.UpdatePosts;
-import com.jeongseok.boardapp.entity.Posts;
+import com.jeongseok.boardapp.dto.CreatePost;
+import com.jeongseok.boardapp.dto.PostDto;
+import com.jeongseok.boardapp.dto.UpdatePost;
+import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
-import com.jeongseok.boardapp.repository.PostsRepository;
+import com.jeongseok.boardapp.repository.PostRepository;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
 import java.time.LocalDateTime;
@@ -18,18 +18,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PostsService {
+public class PostService {
 
-	private final PostsRepository postsRepository;
+	private final PostRepository postRepository;
 	private final UserRepository userRepository;
 
 	@Transactional
-	public void writePosts(CreatePosts.Request request, String loginUser) {
+	public void writePosts(CreatePost.Request request, String loginUser) {
 
 		// 로그인한 유저 정보 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		postsRepository.save(Posts.builder()
+		postRepository.save(Post.builder()
 				.title(request.getTitle())
 				.content(request.getContent())
 				.user(user)
@@ -38,42 +38,41 @@ public class PostsService {
 	}
 
 	@Transactional
-	public List<PostsDto> getPostsByUseFlag() {
+	public List<PostDto> getPostsByUseFlag() {
 
-		List<Posts> posts = postsRepository.findAllByUseYn("Y");
+		List<Post> posts = postRepository.findAllByUseYn("Y");
 
 		return posts.stream()
-			.map(PostsDto::fromEntity)
+			.map(PostDto::fromEntity)
 			.collect(Collectors.toList());
 	}
 
 	@Transactional
-	public PostsDto detailPosts(Long id) {
+	public PostDto detailPosts(Long id) {
+		Post post = postRepository.findById(id).get();
 
-		Posts posts = postsRepository.findById(id).get();
-
-		return PostsDto.builder()
-			.id(posts.getId())
-			.title(posts.getTitle())
-			.content(posts.getContent())
-			.user(posts.getUser())
+		return PostDto.builder()
+			.id(post.getId())
+			.title(post.getTitle())
+			.content(post.getContent())
+			.user(post.getUser())
 			.build();
 	}
 
 	@Transactional
-	public void updatePosts(Long postsId, String loginUser, UpdatePosts.Request request) {
+	public void updatePosts(Long postsId, String loginUser, UpdatePost.Request request) {
 
 		// 게시글 가져오기
-		Posts posts = postsRepository.findById(postsId).get();
+		Post post = postRepository.findById(postsId).get();
 
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (posts.getUser().getId() == user.getId()) {
-			posts.setTitle(request.getTitle());
-			posts.setContent(request.getContent());
+		if (post.getUser().getId() == user.getId()) {
+			post.setTitle(request.getTitle());
+			post.setContent(request.getContent());
 
-			postsRepository.save(posts);
+			postRepository.save(post);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
@@ -84,16 +83,16 @@ public class PostsService {
 	public void deletePosts(Long postsId, String loginUser) {
 
 		// 게시글 가져오기
-		Posts posts = postsRepository.findById(postsId).get();
+		Post post = postRepository.findById(postsId).get();
 
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (posts.getUser().getId() == user.getId()) {
-			posts.setUseYn("N");
-			posts.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+		if (post.getUser().getId() == user.getId()) {
+			post.setUseYn("N");
+			post.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
 
-			postsRepository.save(posts);
+			postRepository.save(post);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
@@ -106,12 +105,12 @@ public class PostsService {
 	private boolean isSameUser(Long postsId, String loginUser) {
 
 		// 게시글 가져오기
-		Posts posts = postsRepository.findById(postsId).get();
+		Post post = postRepository.findById(postsId).get();
 
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (posts.getUser().getId() == user.getId()) {
+		if (post.getUser().getId() == user.getId()) {
 			return true;
 		}
 		return false;
