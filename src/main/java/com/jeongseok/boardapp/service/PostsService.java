@@ -5,14 +5,12 @@ import com.jeongseok.boardapp.dto.PostsDto;
 import com.jeongseok.boardapp.dto.UpdatePosts;
 import com.jeongseok.boardapp.entity.Posts;
 import com.jeongseok.boardapp.entity.User;
-import com.jeongseok.boardapp.exception.UserException;
 import com.jeongseok.boardapp.repository.PostsRepository;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -80,7 +78,7 @@ public class PostsService {
 
 			postsRepository.save(posts);
 		} else {
-			throw new UserException(ErrorCode.USER_UN_MATCH);
+			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
 
 	}
@@ -100,7 +98,7 @@ public class PostsService {
 
 			postsRepository.save(posts);
 		} else {
-			throw new UserException(ErrorCode.USER_UN_MATCH);
+			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
 	}
 
