@@ -8,6 +8,7 @@ import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.PostRepository;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
+import com.jeongseok.boardapp.type.PostType;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class PostService {
 			.title(request.getTitle())
 			.content(request.getContent())
 			.user(user)
-			.useYn("Y")
+			.postType(PostType.Y)
 			.build());
 	}
 
@@ -80,7 +81,7 @@ public class PostService {
 		Post post = postRepository.findById(postsId).get();
 
 		if (post.isSameWriter(loginUser)) {
-			post.delete("N");
+			post.delete(PostType.N);
 			postRepository.save(post);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());

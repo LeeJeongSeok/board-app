@@ -1,10 +1,13 @@
 package com.jeongseok.boardapp.entity;
 
 
+import com.jeongseok.boardapp.type.PostType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,15 +37,18 @@ public class Post extends BaseEntity{
 	@JoinColumn(name = "user_id")
 	private User user;
 	private String deletedAt;
-	private String useYn;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "use_yn")
+	private PostType postType;
 
 	public void update(String title, String content) {
 		this.title = title;
 		this.content = content;
 	}
 
-	public void delete(String useYn) {
-		this.useYn = useYn;
+	public void delete(PostType postType) {
+		this.postType = postType;
 		this.deletedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
 	}
 
