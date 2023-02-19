@@ -28,10 +28,10 @@ public class WebSecurityConfig {
 		http
 			.csrf().disable()
 			.authorizeHttpRequests((requests) -> requests
-				.antMatchers("/posts").authenticated()
-				.antMatchers(HttpMethod.PATCH, "/posts/**").authenticated()
-				.antMatchers(HttpMethod.DELETE, "/posts/**").authenticated()
-				.antMatchers("/", "/join", "/posts/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/post").authenticated()
+				.antMatchers(HttpMethod.PATCH, "/post/**").authenticated()
+				.antMatchers(HttpMethod.DELETE, "/post/**").authenticated()
+				.antMatchers("/", "/join", "/post/**").permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form

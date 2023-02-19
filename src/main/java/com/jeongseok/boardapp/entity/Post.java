@@ -1,6 +1,7 @@
 package com.jeongseok.boardapp.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ import lombok.Setter;
 public class Post extends BaseEntity{
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "post_id")
 	private Long id;
 
 	private String title;

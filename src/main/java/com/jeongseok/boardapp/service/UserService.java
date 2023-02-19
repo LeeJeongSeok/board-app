@@ -1,7 +1,7 @@
 package com.jeongseok.boardapp.service;
 
 import com.jeongseok.boardapp.dto.CreateUser;
-import com.jeongseok.boardapp.dto.CustomUserDto;
+import com.jeongseok.boardapp.dto.LoginUserDto;
 import com.jeongseok.boardapp.dto.UpdateUser;
 import com.jeongseok.boardapp.dto.UserDto;
 import com.jeongseok.boardapp.entity.User;
@@ -26,7 +26,7 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		User user = getUser(username);
-		return new CustomUserDto(user.getUsername(), user.getPassword());
+		return new LoginUserDto(user.getUsername(), user.getPassword());
 	}
 
 	@Transactional

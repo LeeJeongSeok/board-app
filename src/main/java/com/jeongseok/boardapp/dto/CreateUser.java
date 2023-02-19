@@ -43,7 +43,6 @@ public class CreateUser {
 	@Builder
 	public static class Response {
 
-		private Long id;
 		private String username;
 		private String password;
 		private String name;
@@ -52,7 +51,6 @@ public class CreateUser {
 
 		public static Response from(UserDto userDto) {
 			return Response.builder()
-				.id(userDto.getId())
 				.username(userDto.getUsername())
 				.password(userDto.getPassword())
 				.name(userDto.getName())

@@ -49,7 +49,8 @@ public class PostService {
 
 	@Transactional
 	public PostDto detailPosts(Long id) {
-		Post post = postRepository.findById(id).get();
+		Post post = postRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
 		return PostDto.builder()
 			.id(post.getId())
@@ -68,7 +69,7 @@ public class PostService {
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (post.getUser().getId() == user.getId()) {
+		if (post.getUser().getUsername().equals(user.getUsername())) {
 			post.setTitle(request.getTitle());
 			post.setContent(request.getContent());
 
@@ -88,7 +89,7 @@ public class PostService {
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (post.getUser().getId() == user.getId()) {
+		if (post.getUser().getUsername().equals(user.getUsername())) {
 			post.setUseYn("N");
 			post.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
 
@@ -110,7 +111,7 @@ public class PostService {
 		// 유저 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
 
-		if (post.getUser().getId() == user.getId()) {
+		if (post.getUser().getUsername().equals(user.getUsername())) {
 			return true;
 		}
 		return false;

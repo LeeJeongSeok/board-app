@@ -1,5 +1,6 @@
 package com.jeongseok.boardapp.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +18,8 @@ import lombok.Setter;
 @Entity
 public class User extends BaseEntity{
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id
+	@Column(name = "user_id")
 	private String username;
 	private String password;
 	private String name;

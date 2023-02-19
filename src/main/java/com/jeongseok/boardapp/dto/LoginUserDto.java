@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomUserDto implements UserDetails {
+public class LoginUserDto implements UserDetails {
 
 	private String username;
 	private String password;
@@ -52,8 +52,8 @@ public class CustomUserDto implements UserDetails {
 		return true;
 	}
 
-	public static CustomUserDto from(User user) {
-		return CustomUserDto.builder()
+	public static LoginUserDto from(User user) {
+		return LoginUserDto.builder()
 			.username(user.getUsername())
 			.password(user.getPassword())
 			.build();

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class PostsController {
+public class PostController {
 
 	private final PostService postService;
 
@@ -42,15 +42,15 @@ public class PostsController {
 
 		model.addAttribute("list", postInfo);
 
-		return "posts/list";
+		return "post/list";
 	}
 
-	@GetMapping("/posts")
+	@GetMapping("/post")
 	public String writePostsForm() {
-		return "posts/write";
+		return "post/write";
 	}
 
-	@PostMapping("/posts")
+	@PostMapping("/post")
 	public String writePosts(@Valid CreatePost.Request request, Errors errors, Principal principal, Model model) {
 		if (errors.hasErrors()) {
 			Map<String, String> validateResult = validationRequestValue(errors);
@@ -59,7 +59,7 @@ public class PostsController {
 				model.addAttribute(key, validateResult.get(key));
 			}
 
-			return "posts/write";
+			return "post/write";
 		}
 
 		postService.writePosts(request, principal.getName());
@@ -67,7 +67,7 @@ public class PostsController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/posts/{id}")
+	@GetMapping("/post/{id}")
 	public String detailPostsForm(@PathVariable Long id, Model model) {
 
 		PostDto postDto = postService.detailPosts(id);
@@ -78,12 +78,12 @@ public class PostsController {
 			.content(postDto.getContent())
 			.build();
 
-		model.addAttribute("posts", postInfo);
+		model.addAttribute("post", postInfo);
 
-		return "posts/detail";
+		return "post/detail";
 	}
 
-	@PatchMapping("/posts/{id}")
+	@PatchMapping("/post/{id}")
 	public String updatePosts(@PathVariable Long id, @Valid UpdatePost.Request request, Errors errors, Model model, Principal principal) {
 		if (errors.hasErrors()) {
 			Map<String, String> validateResult = validationRequestValue(errors);
@@ -92,7 +92,7 @@ public class PostsController {
 				model.addAttribute(key, validateResult.get(key));
 			}
 
-			return "posts/detail";
+			return "post/detail";
 		}
 
 		postService.updatePosts(id, principal.getName(), request);
@@ -100,7 +100,7 @@ public class PostsController {
 		return "redirect:/";
 	}
 
-	@DeleteMapping("/posts/{id}")
+	@DeleteMapping("/post/{id}")
 	public String deletePosts(@PathVariable Long id, Principal principal) {
 		postService.deletePosts(id, principal.getName());
 
