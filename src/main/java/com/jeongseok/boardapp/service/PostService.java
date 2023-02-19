@@ -24,7 +24,7 @@ public class PostService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public void writePosts(CreatePost.Request request, String loginUser) {
+	public void writePost(CreatePost.Request request, String loginUser) {
 
 		// 로그인한 유저 정보 가져오기
 		User user = userRepository.findByUsername(loginUser).get();
@@ -48,7 +48,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public PostDto detailPosts(Long id) {
+	public PostDto detailPost(Long id) {
 		Post post = postRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
@@ -61,7 +61,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public void updatePosts(Long postsId, String loginUser, UpdatePost.Request request) {
+	public void updatePost(Long postsId, String loginUser, UpdatePost.Request request) {
 
 		// 게시글 가져오기
 		Post post = postRepository.findById(postsId).get();
@@ -78,7 +78,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public void deletePosts(Long postsId, String loginUser) {
+	public void deletePost(Long postsId, String loginUser) {
 
 		// 게시글 가져오기
 		Post post = postRepository.findById(postsId).get();

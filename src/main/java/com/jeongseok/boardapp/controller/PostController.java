@@ -62,7 +62,7 @@ public class PostController {
 			return "post/write";
 		}
 
-		postService.writePosts(request, principal.getName());
+		postService.writePost(request, principal.getName());
 
 		return "redirect:/";
 	}
@@ -70,7 +70,7 @@ public class PostController {
 	@GetMapping("/post/{id}")
 	public String detailPostsForm(@PathVariable Long id, Model model) {
 
-		PostDto postDto = postService.detailPosts(id);
+		PostDto postDto = postService.detailPost(id);
 
 		PostInfo postInfo = PostInfo.builder()
 			.id(postDto.getId())
@@ -95,14 +95,14 @@ public class PostController {
 			return "post/detail";
 		}
 
-		postService.updatePosts(id, principal.getName(), request);
+		postService.updatePost(id, principal.getName(), request);
 
 		return "redirect:/";
 	}
 
 	@DeleteMapping("/post/{id}")
 	public String deletePosts(@PathVariable Long id, Principal principal) {
-		postService.deletePosts(id, principal.getName());
+		postService.deletePost(id, principal.getName());
 
 		return "redirect:/";
 	}
