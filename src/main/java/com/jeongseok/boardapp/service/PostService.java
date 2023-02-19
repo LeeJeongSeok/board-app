@@ -8,8 +8,6 @@ import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.PostRepository;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +28,10 @@ public class PostService {
 		User user = userRepository.findByUsername(loginUser).get();
 
 		postRepository.save(Post.builder()
-				.title(request.getTitle())
-				.content(request.getContent())
-				.user(user)
-				.useYn("Y")
+			.title(request.getTitle())
+			.content(request.getContent())
+			.user(user)
+			.useYn("Y")
 			.build());
 	}
 
@@ -67,9 +65,7 @@ public class PostService {
 		Post post = postRepository.findById(postsId).get();
 
 		if (post.isSameWriter(loginUser)) {
-			post.setTitle(request.getTitle());
-			post.setContent(request.getContent());
-
+			post.update(request.getTitle(), request.getContent());
 			postRepository.save(post);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
@@ -84,9 +80,7 @@ public class PostService {
 		Post post = postRepository.findById(postsId).get();
 
 		if (post.isSameWriter(loginUser)) {
-			post.setUseYn("N");
-			post.setDeletedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
-
+			post.delete("N");
 			postRepository.save(post);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());

@@ -1,6 +1,8 @@
 package com.jeongseok.boardapp.entity;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +36,15 @@ public class Post extends BaseEntity{
 	private String deletedAt;
 	private String useYn;
 
+	public void update(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
+	public void delete(String useYn) {
+		this.useYn = useYn;
+		this.deletedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+	}
 
 	public boolean isSameWriter(String loginUser) {
 		return this.user.getUsername().equals(loginUser);
