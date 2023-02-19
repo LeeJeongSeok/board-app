@@ -34,4 +34,9 @@ public class Post extends BaseEntity{
 	private String deletedAt;
 	private String useYn;
 
+
+	public boolean isSameWriter(String loginUser) {
+		return this.user.getUsername().equals(loginUser);
+	}
+
 }
