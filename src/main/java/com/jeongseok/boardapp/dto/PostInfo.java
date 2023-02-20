@@ -1,6 +1,8 @@
 package com.jeongseok.boardapp.dto;
 
 import com.jeongseok.boardapp.entity.User;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,4 +20,18 @@ public class PostInfo {
 	private String content;
 	private User user;
 	private String createdAt;
+
+	private List<CommentInfo> comments;
+
+	// dto -> response
+	public PostInfo(PostDto postDto) {
+		this.id = postDto.getId();
+		this.title = postDto.getTitle();
+		this.content = postDto.getContent();
+		this.user = postDto.getUser();
+		this.createdAt = postDto.getCreatedAt();
+		this.comments = postDto.getComments().stream().map(CommentInfo::new).collect(Collectors.toList());
+	}
+
+
 }

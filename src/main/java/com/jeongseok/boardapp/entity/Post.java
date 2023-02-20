@@ -4,6 +4,7 @@ package com.jeongseok.boardapp.entity;
 import com.jeongseok.boardapp.type.PostType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +44,11 @@ public class Post extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	@Column(name = "use_yn")
 	private PostType postType;
+
+	@OneToMany(mappedBy = "post")
+	@OrderBy("id ASC")
+	private List<Comment> comments;
+
 
 	public void update(String title, String content) {
 		this.title = title;

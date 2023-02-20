@@ -1,5 +1,6 @@
 package com.jeongseok.boardapp.controller;
 
+import com.jeongseok.boardapp.dto.CommentInfo;
 import com.jeongseok.boardapp.dto.CreatePost;
 import com.jeongseok.boardapp.dto.PostDto;
 import com.jeongseok.boardapp.dto.PostInfo;
@@ -31,7 +32,7 @@ public class PostController {
 	@GetMapping("/")
 	public String list(Model model) {
 
-		List<PostInfo> postInfo = postService.getPostsByPostType().stream()
+		List<PostInfo> postInfos = postService.getPostsByPostType().stream()
 			.map(postDto -> PostInfo.builder()
 				.id(postDto.getId())
 				.title(postDto.getTitle())
@@ -40,7 +41,7 @@ public class PostController {
 				.build())
 			.collect(Collectors.toList());
 
-		model.addAttribute("list", postInfo);
+		model.addAttribute("list", postInfos);
 
 		return "post/list";
 	}
@@ -72,13 +73,13 @@ public class PostController {
 
 		PostDto postDto = postService.detailPost(id);
 
-		PostInfo postInfo = PostInfo.builder()
-			.id(postDto.getId())
-			.title(postDto.getTitle())
-			.content(postDto.getContent())
-			.build();
+		PostInfo postInfo = new PostInfo(postDto);
 
+		List<CommentInfo> comments = postInfo.getComments();
+
+		// 여기서 댓글 리스트들을 쭈루룩 뽑아와야함
 		model.addAttribute("post", postInfo);
+		model.addAttribute("comments", comments);
 
 		return "post/detail";
 	}

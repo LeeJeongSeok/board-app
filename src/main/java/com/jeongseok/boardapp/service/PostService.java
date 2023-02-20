@@ -55,6 +55,7 @@ public class PostService {
 			.id(post.getId())
 			.title(post.getTitle())
 			.content(post.getContent())
+			.comments(post.getComments())
 			.user(post.getUser())
 			.build();
 	}
