@@ -37,9 +37,9 @@ public class PostService {
 	}
 
 	@Transactional
-	public List<PostDto> getPostsByUseFlag() {
+	public List<PostDto> getPostsByPostType() {
 
-		List<Post> posts = postRepository.findAllByUseYn("Y");
+		List<Post> posts = postRepository.findAllByPostType(PostType.Y);
 
 		return posts.stream()
 			.map(PostDto::fromEntity)

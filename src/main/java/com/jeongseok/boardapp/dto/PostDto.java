@@ -2,6 +2,7 @@ package com.jeongseok.boardapp.dto;
 
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
+import com.jeongseok.boardapp.type.PostType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class PostDto {
 	private String title;
 	private String content;
 	private User user;
-	private String useYn;
+	private PostType useYn;
 	private String createdAt;
 	private String updatedAt;
 
@@ -28,7 +29,7 @@ public class PostDto {
 			.title(post.getTitle())
 			.content(post.getContent())
 			.user(post.getUser())
-			.useYn(post.getUseYn())
+			.useYn(post.getPostType())
 			.createdAt(post.getCreatedAt())
 			.updatedAt(post.getUpdatedAt())
 			.build();

@@ -31,7 +31,7 @@ public class PostController {
 	@GetMapping("/")
 	public String list(Model model) {
 
-		List<PostInfo> postInfo = postService.getPostsByUseFlag().stream()
+		List<PostInfo> postInfo = postService.getPostsByPostType().stream()
 			.map(postDto -> PostInfo.builder()
 				.id(postDto.getId())
 				.title(postDto.getTitle())
