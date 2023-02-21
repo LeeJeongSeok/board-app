@@ -1,7 +1,8 @@
 package com.jeongseok.boardapp.service;
 
 
-import com.jeongseok.boardapp.dto.CommentDto;
+import com.jeongseok.boardapp.dto.comment.CommentDto;
+import com.jeongseok.boardapp.dto.comment.CreateCommentDto;
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
@@ -32,6 +33,7 @@ public class CommentService {
 			.collect(Collectors.toList());
 	}
 
+	@Transactional
 	public void writeComment(Long postId, String comment, String loginUser) {
 
 		// 로그인한 유저 정보 가져오기
