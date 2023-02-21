@@ -62,10 +62,8 @@ public class UserService implements UserDetailsService {
 		User user = getUser(username);
 
 		// 업데이트할 내용 선언
-		user.setPassword(bCryptPasswordEncoder.encode(updateUser.getPassword()));
-		user.setName(updateUser.getName());
-		user.setEmail(updateUser.getEmail());
-		user.setPhone(updateUser.getPhone());
+		user.update(bCryptPasswordEncoder.encode(updateUser.getPassword()), updateUser.getName(),
+			updateUser.getEmail(), updateUser.getPhone());
 
 		// Repository에 저장
 		userRepository.save(user);

@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,5 +25,12 @@ public class User extends BaseEntity{
 	private String name;
 	private String email;
 	private String phone;
+
+	public void update(String password, String name, String email, String phone) {
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+	}
 
 }
