@@ -1,9 +1,9 @@
 package com.jeongseok.boardapp.service;
 
-import com.jeongseok.boardapp.dto.CreateUser;
-import com.jeongseok.boardapp.dto.LoginUserDto;
-import com.jeongseok.boardapp.dto.UpdateUser;
-import com.jeongseok.boardapp.dto.UserDto;
+import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.LoginUserDto;
+import com.jeongseok.boardapp.dto.user.UpdateUser;
+import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.exception.UserException;
 import com.jeongseok.boardapp.repository.UserRepository;

@@ -1,10 +1,10 @@
 package com.jeongseok.boardapp.controller;
 
-import com.jeongseok.boardapp.dto.CommentInfo;
-import com.jeongseok.boardapp.dto.CreatePost;
-import com.jeongseok.boardapp.dto.PostDto;
-import com.jeongseok.boardapp.dto.PostInfo;
-import com.jeongseok.boardapp.dto.UpdatePost;
+import com.jeongseok.boardapp.dto.comment.CommentInfo;
+import com.jeongseok.boardapp.dto.post.CreatePost;
+import com.jeongseok.boardapp.dto.post.PostDto;
+import com.jeongseok.boardapp.dto.post.PostInfo;
+import com.jeongseok.boardapp.dto.post.UpdatePost;
 import com.jeongseok.boardapp.service.PostService;
 import java.security.Principal;
 import java.util.HashMap;

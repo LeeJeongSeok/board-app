@@ -1,8 +1,8 @@
 package com.jeongseok.boardapp.service;
 
-import com.jeongseok.boardapp.dto.CreatePost;
-import com.jeongseok.boardapp.dto.PostDto;
-import com.jeongseok.boardapp.dto.UpdatePost;
+import com.jeongseok.boardapp.dto.post.CreatePost;
+import com.jeongseok.boardapp.dto.post.PostDto;
+import com.jeongseok.boardapp.dto.post.UpdatePost;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.PostRepository;
