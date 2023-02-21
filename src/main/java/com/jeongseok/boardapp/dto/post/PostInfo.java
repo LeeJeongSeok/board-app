@@ -1,5 +1,6 @@
-package com.jeongseok.boardapp.dto;
+package com.jeongseok.boardapp.dto.post;
 
+import com.jeongseok.boardapp.dto.comment.CommentInfo;
 import com.jeongseok.boardapp.entity.User;
 import java.util.List;
 import java.util.stream.Collectors;

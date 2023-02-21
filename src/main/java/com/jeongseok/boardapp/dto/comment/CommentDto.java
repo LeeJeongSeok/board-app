@@ -1,4 +1,4 @@
-package com.jeongseok.boardapp.dto;
+package com.jeongseok.boardapp.dto.comment;
 
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;

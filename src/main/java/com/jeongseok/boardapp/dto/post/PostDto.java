@@ -1,11 +1,10 @@
-package com.jeongseok.boardapp.dto;
+package com.jeongseok.boardapp.dto.post;
 
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.type.PostType;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
