@@ -11,7 +11,7 @@ import lombok.Setter;
 
 public class UpdateUser {
 
-	@Getter @Setter
+	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
@@ -32,7 +32,7 @@ public class UpdateUser {
 		private String phone;
 	}
 
-	@Getter @Setter
+	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder

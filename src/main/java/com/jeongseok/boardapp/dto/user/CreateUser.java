@@ -37,7 +37,7 @@ public class CreateUser {
 		private String phone;
 	}
 
-	@Getter @Setter
+	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder

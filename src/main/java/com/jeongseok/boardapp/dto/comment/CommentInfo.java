@@ -29,17 +29,6 @@ public class CommentInfo {
 
 	private User user;
 
-	public CommentInfo(CommentDto commentDto) {
-		this.id = commentDto.getId();
-		this.comment = commentDto.getComment();
-		this.createdAt = commentDto.getCreatedAt();
-		this.updatedAt = commentDto.getUpdatedAt();
-		this.deletedAt = commentDto.getDeletedAt();
-		this.commentType = commentDto.getCommentType();
-		this.post = commentDto.getPost();
-		this.user = commentDto.getUser();
-	}
-
 	public CommentInfo(Comment comment) {
 		this.id = comment.getId();
 		this.comment = comment.getComment();

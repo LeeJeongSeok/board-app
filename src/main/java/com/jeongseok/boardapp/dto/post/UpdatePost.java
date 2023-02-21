@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class UpdatePost {
 
-
-	@Getter @Setter
+	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
@@ -21,10 +19,6 @@ public class UpdatePost {
 
 		@NotBlank
 		private String content;
-	}
-
-	public static class Response {
-
 	}
 
 }
