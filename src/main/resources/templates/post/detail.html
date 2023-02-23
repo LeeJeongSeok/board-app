@@ -33,31 +33,34 @@
 
     <div class="card">
       <div class="card-header bi bi-chat-dots" th:text="|${comments.size()} 개의 댓글|"></div>
-      <th:block th:each="comment : ${comments}">
         <ul class="list-group-flush">
-          <li class="list-group-item">
-              <span>
-                <span style="font-size: small" th:text="${comment.getUser().getUsername()}"></span>
-                <span style="font-size: xx-small" th:text="${comment.getCreatedAt()}"></span>
-              </span>
-          </li>
-          <button class="badge bi bi-pencil-square" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="color: black" sec:authorize="isAuthenticated()"> 수정</button>
-          <div class="collapse" id="collapseExample">
-            <div class="well">
-              <form th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="patch">
-                <textarea class="form-control" name="comment" rows="5" th:text="${comment.getComment()}"></textarea>
-                <button type="submit" class="btn btn-primary" sec:authorize="isAuthenticated()">수정완료</button>
-              </form>
-            </div>
-          </div>
-          <form th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="delete">
-            <button type="submit" class="badge bi bi-trash" style="color:red" sec:authorize="isAuthenticated()"> 삭제</button>
-          </form>
-          <div th:text="${comment.getComment()}"></div>
-        </ul>
-      </th:block>
-    </div>
+          <th:block th:each="comment : ${comments}">
+            <li class="list-group-item">
+                <span>
+                  <span style="font-size: small" th:text="${comment.getUser().getUsername()}"></span>
+                  <span style="font-size: xx-small" th:text="${comment.getCreatedAt()}"></span>
+                </span>
 
+                <button class="badge bi bi-pencil-square" type="submit" data-bs-toggle="collapse" th:attr="data-bs-target='#collapseExample'+${comment.id}" aria-expanded="false" aria-controls="collapseExample" style="color: black" sec:authorize="isAuthenticated()"> 수정</button>
+                <form th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="delete">
+                  <button type="submit" class="badge bi bi-trash" style="color:red" sec:authorize="isAuthenticated()"> 삭제</button>
+                </form>
+
+                <div th:text="${comment.getComment()}"></div>
+
+                <div class="collapse" th:id="'collapseExample' + ${comment.id}">
+                  <div class="well">
+                    <form th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="patch">
+                      <textarea class="form-control" name="comment" rows="5" th:text="${comment.getComment()}"></textarea>
+                      <button type="submit" class="btn btn-primary" sec:authorize="isAuthenticated()">수정완료</button>
+                    </form>
+                  </div>
+                </div>
+            </li>
+
+          </th:block>
+        </ul>
+    </div>
 
     <div class="card">
       <div class="card-header">댓글 작성하기</div>
