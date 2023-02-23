@@ -1,6 +1,8 @@
 package com.jeongseok.boardapp.service;
 
 
+import com.jeongseok.boardapp.dto.comment.CreateComment;
+import com.jeongseok.boardapp.dto.comment.UpdateComment;
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
@@ -22,7 +24,7 @@ public class CommentService {
 	private final PostRepository postRepository;
 
 	@Transactional
-	public void writeComment(Long postId, String comment, String loginUser) {
+	public void writeComment(Long postId, CreateComment.Request request, String loginUser) {
 
 		// 로그인한 유저 정보 가져오기
 		User user = userRepository.findByUsername(loginUser)
@@ -32,9 +34,8 @@ public class CommentService {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
-
 		commentRepository.save(Comment.builder()
-				.comment(comment)
+				.comment(request.getComment())
 				.post(post)
 				.user(user)
 				.useType(UseType.Y)
@@ -43,14 +44,14 @@ public class CommentService {
 
 
 	@Transactional
-	public void updateComment(Long postId, Long commentId, String newComment, String loginUser) {
+	public void updateComment(Long postId, Long commentId, UpdateComment.Request request, String loginUser) {
 
 		// 댓글 가져오기
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 
 		if (comment.isSameWriter(loginUser)) {
-			comment.update(newComment);
+			comment.update(request.getComment());
 			commentRepository.save(comment);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());

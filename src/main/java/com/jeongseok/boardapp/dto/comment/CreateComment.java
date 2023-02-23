@@ -5,15 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class CreateCommentDto {
+public class CreateComment {
 
-	@NotBlank
-	private String comment;
-
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class Request {
+		@NotBlank
+		private String comment;
+	}
 }
