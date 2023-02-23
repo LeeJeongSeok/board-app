@@ -1,6 +1,6 @@
 package com.jeongseok.boardapp.entity;
 
-import com.jeongseok.boardapp.type.CommentType;
+import com.jeongseok.boardapp.type.UseType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.persistence.Column;
@@ -17,8 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.core.parameters.P;
 
 @Getter
 @NoArgsConstructor
@@ -38,7 +36,7 @@ public class Comment extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "use_yn")
-	private CommentType commentType;
+	private UseType useType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")
@@ -51,8 +49,8 @@ public class Comment extends BaseEntity {
 		this.comment = comment;
 	}
 
-	public void delete(CommentType commentType) {
-		this.commentType = commentType;
+	public void delete(UseType useType) {
+		this.useType = useType;
 		this.deletedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
 	}
 

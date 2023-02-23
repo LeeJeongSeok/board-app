@@ -1,18 +1,14 @@
 package com.jeongseok.boardapp.service;
 
 
-import com.jeongseok.boardapp.dto.comment.CommentDto;
-import com.jeongseok.boardapp.dto.comment.CreateCommentDto;
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.CommentRepository;
 import com.jeongseok.boardapp.repository.PostRepository;
 import com.jeongseok.boardapp.repository.UserRepository;
-import com.jeongseok.boardapp.type.CommentType;
 import com.jeongseok.boardapp.type.ErrorCode;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.jeongseok.boardapp.type.UseType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +20,6 @@ public class CommentService {
 	private final CommentRepository commentRepository;
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
-
-	public List<CommentDto> getCommentsByCommentType(Long postId) {
-		List<Comment> comments = commentRepository.findByPostIdAndCommentType(postId, CommentType.Y);
-
-		return comments.stream()
-			.map(CommentDto::fromEntity)
-			.collect(Collectors.toList());
-	}
 
 	@Transactional
 	public void writeComment(Long postId, String comment, String loginUser) {
@@ -49,7 +37,7 @@ public class CommentService {
 				.comment(comment)
 				.post(post)
 				.user(user)
-				.commentType(CommentType.Y)
+				.useType(UseType.Y)
 			.build());
 	}
 
@@ -77,7 +65,7 @@ public class CommentService {
 			.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 
 		if (comment.isSameWriter(loginUser)) {
-			comment.delete(CommentType.N);
+			comment.delete(UseType.N);
 			commentRepository.save(comment);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());

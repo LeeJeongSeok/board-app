@@ -8,7 +8,7 @@ import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.PostRepository;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
-import com.jeongseok.boardapp.type.PostType;
+import com.jeongseok.boardapp.type.UseType;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -32,14 +32,14 @@ public class PostService {
 			.title(request.getTitle())
 			.content(request.getContent())
 			.user(user)
-			.postType(PostType.Y)
+			.useType(UseType.Y)
 			.build());
 	}
 
 	@Transactional
 	public List<PostDto> getPostsByPostType() {
 
-		List<Post> posts = postRepository.findAllByPostType(PostType.Y);
+		List<Post> posts = postRepository.findAllByUseType(UseType.Y);
 
 		return posts.stream()
 			.map(PostDto::fromEntity)
@@ -82,7 +82,7 @@ public class PostService {
 		Post post = postRepository.findById(postsId).get();
 
 		if (post.isSameWriter(loginUser)) {
-			post.delete(PostType.N);
+			post.delete(UseType.N);
 			postRepository.save(post);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());

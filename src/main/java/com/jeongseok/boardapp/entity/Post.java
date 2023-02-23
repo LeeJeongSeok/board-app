@@ -1,7 +1,7 @@
 package com.jeongseok.boardapp.entity;
 
 
-import com.jeongseok.boardapp.type.PostType;
+import com.jeongseok.boardapp.type.UseType;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -43,7 +42,7 @@ public class Post extends BaseEntity{
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "use_yn")
-	private PostType postType;
+	private UseType useType;
 
 	@OneToMany(mappedBy = "post")
 	@OrderBy("id ASC")
@@ -55,8 +54,8 @@ public class Post extends BaseEntity{
 		this.content = content;
 	}
 
-	public void delete(PostType postType) {
-		this.postType = postType;
+	public void delete(UseType useType) {
+		this.useType = useType;
 		this.deletedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
 	}
 

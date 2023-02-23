@@ -1,5 +1,5 @@
 package com.jeongseok.boardapp.type;
 
-public enum PostType {
+public enum UseType {
 	Y, N;
 }

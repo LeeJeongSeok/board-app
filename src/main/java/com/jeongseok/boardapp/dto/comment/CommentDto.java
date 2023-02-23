@@ -3,12 +3,11 @@ package com.jeongseok.boardapp.dto.comment;
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
-import com.jeongseok.boardapp.type.CommentType;
+import com.jeongseok.boardapp.type.UseType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -21,7 +20,7 @@ public class CommentDto {
 	private String createdAt;
 	private String updatedAt;
 	private String deletedAt;
-	private CommentType commentType;
+	private UseType useType;
 	private User user;
 	private Post post;
 
@@ -31,7 +30,7 @@ public class CommentDto {
 			.comment(comment.getComment())
 			.createdAt(comment.getCreatedAt())
 			.updatedAt(comment.getUpdatedAt())
-			.commentType(comment.getCommentType())
+			.useType(comment.getUseType())
 			.user(comment.getUser())
 			.post(comment.getPost())
 			.build();

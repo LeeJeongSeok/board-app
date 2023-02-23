@@ -3,7 +3,7 @@ package com.jeongseok.boardapp.dto.comment;
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
-import com.jeongseok.boardapp.type.CommentType;
+import com.jeongseok.boardapp.type.UseType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class CommentInfo {
 	private String updatedAt;
 	private String deletedAt;
 
-	private CommentType commentType;
+	private UseType useType;
 
 	private Post post;
 
@@ -35,7 +35,7 @@ public class CommentInfo {
 		this.createdAt = comment.getCreatedAt();
 		this.updatedAt = comment.getUpdatedAt();
 		this.deletedAt = comment.getDeletedAt();
-		this.commentType = comment.getCommentType();
+		this.useType = comment.getUseType();
 		this.post = comment.getPost();
 		this.user = comment.getUser();
 	}
