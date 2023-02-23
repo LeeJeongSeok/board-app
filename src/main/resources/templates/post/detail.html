@@ -39,12 +39,21 @@
               <span>
                 <span style="font-size: small" th:text="${comment.getUser().getUsername()}"></span>
                 <span style="font-size: xx-small" th:text="${comment.getCreatedAt()}"></span>
-                <button class="badge bi bi-pencil-square" style="color: black"> 수정</button>
-                <button class="badge bi bi-trash" style="color: red"> 삭제</button>
               </span>
-
-              <div th:text="${comment.getComment()}"></div>
           </li>
+          <button class="badge bi bi-pencil-square" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="color: black" sec:authorize="isAuthenticated()"> 수정</button>
+          <div class="collapse" id="collapseExample">
+            <div class="well">
+              <form th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="patch">
+                <textarea class="form-control" name="comment" rows="5" th:text="${comment.getComment()}"></textarea>
+                <button type="submit" class="btn btn-primary" sec:authorize="isAuthenticated()">수정완료</button>
+              </form>
+            </div>
+          </div>
+          <form th:action="@{/post/{id}/comment/{commentId}(id=${post.id}, commentId=${comment.id})}" th:method="delete">
+            <button type="submit" class="badge bi bi-trash" style="color:red" sec:authorize="isAuthenticated()"> 삭제</button>
+          </form>
+          <div th:text="${comment.getComment()}"></div>
         </ul>
       </th:block>
     </div>

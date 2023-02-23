@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,9 +46,10 @@ public class CommentController {
 	}
 
 	@PatchMapping("/post/{postId}/comment/{commentId}")
-	public String updateComment(@PathVariable Long postId, @PathVariable Long commentId, UpdateComment.Request request, Principal principal) {
+	public String updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestParam String comment, Principal principal) {
 
-		commentService.updateComment(postId, commentId, request, principal.getName());
+		System.out.println(comment);
+		commentService.updateComment(postId, commentId, comment, principal.getName());
 
 		return "redirect:/post/" + postId;
 	}

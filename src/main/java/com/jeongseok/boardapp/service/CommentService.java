@@ -44,14 +44,14 @@ public class CommentService {
 
 
 	@Transactional
-	public void updateComment(Long postId, Long commentId, UpdateComment.Request request, String loginUser) {
+	public void updateComment(Long postId, Long commentId, String newComment, String loginUser) {
 
 		// 댓글 가져오기
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 
 		if (comment.isSameWriter(loginUser)) {
-			comment.update(request.getComment());
+			comment.update(newComment);
 			commentRepository.save(comment);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
