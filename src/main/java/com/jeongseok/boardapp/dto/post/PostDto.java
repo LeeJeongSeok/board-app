@@ -1,10 +1,12 @@
 package com.jeongseok.boardapp.dto.post;
 
+import com.jeongseok.boardapp.dto.comment.CommentDto;
 import com.jeongseok.boardapp.entity.Comment;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.type.UseType;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +25,7 @@ public class PostDto {
 	private UseType useYn;
 	private String createdAt;
 	private String updatedAt;
-	private List<Comment> comments;
+	private List<CommentDto> comments;
 
 	public static PostDto fromEntity(Post post) {
 		return PostDto.builder()
@@ -34,7 +36,7 @@ public class PostDto {
 			.useYn(post.getUseType())
 			.createdAt(post.getCreatedAt())
 			.updatedAt(post.getUpdatedAt())
-			.comments(post.getComments())
+			.comments(post.getComments().stream().map(CommentDto::fromEntity).collect(Collectors.toList()))
 			.build();
 	}
 

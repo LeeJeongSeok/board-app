@@ -29,14 +29,14 @@ public class CommentInfo {
 
 	private User user;
 
-	public CommentInfo(Comment comment) {
-		this.id = comment.getId();
-		this.comment = comment.getComment();
-		this.createdAt = comment.getCreatedAt();
-		this.updatedAt = comment.getUpdatedAt();
-		this.deletedAt = comment.getDeletedAt();
-		this.useType = comment.getUseType();
-		this.post = comment.getPost();
-		this.user = comment.getUser();
+	public CommentInfo(CommentDto commentDto) {
+		this.id = commentDto.getId();
+		this.comment = commentDto.getComment();
+		this.createdAt = commentDto.getCreatedAt();
+		this.updatedAt = commentDto.getUpdatedAt();
+		this.deletedAt = commentDto.getDeletedAt();
+		this.useType = commentDto.getUseType();
+		this.post = commentDto.getPost();
+		this.user = commentDto.getUser();
 	}
 }

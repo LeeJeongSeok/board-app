@@ -1,5 +1,6 @@
 package com.jeongseok.boardapp.service;
 
+import com.jeongseok.boardapp.dto.comment.CommentDto;
 import com.jeongseok.boardapp.dto.post.CreatePost;
 import com.jeongseok.boardapp.dto.post.PostDto;
 import com.jeongseok.boardapp.dto.post.UpdatePost;
@@ -55,7 +56,7 @@ public class PostService {
 			.id(post.getId())
 			.title(post.getTitle())
 			.content(post.getContent())
-			.comments(post.getComments())
+			.comments(post.getComments().stream().map(CommentDto::fromEntity).collect(Collectors.toList()))
 			.user(post.getUser())
 			.build();
 	}
