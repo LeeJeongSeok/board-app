@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 @Getter
 @NoArgsConstructor
@@ -45,6 +46,7 @@ public class Post extends BaseEntity{
 	private UseType useType;
 
 	@OneToMany(mappedBy = "post")
+	@Where(clause = "use_yn = 'Y'")
 	@OrderBy("id ASC")
 	private List<Comment> comments;
 
