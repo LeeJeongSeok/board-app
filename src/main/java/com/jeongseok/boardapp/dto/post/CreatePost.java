@@ -10,7 +10,7 @@ import lombok.Setter;
 
 public class CreatePost {
 
-	@Getter
+	@Getter @Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder

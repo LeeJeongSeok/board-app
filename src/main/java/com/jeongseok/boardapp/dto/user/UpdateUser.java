@@ -11,7 +11,7 @@ import lombok.Setter;
 
 public class UpdateUser {
 
-	@Getter
+	@Getter @Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
