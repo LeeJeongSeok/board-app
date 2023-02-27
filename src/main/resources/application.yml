@@ -18,11 +18,16 @@ spring:
       filter:
         enabled: true
 
+  profiles:
+    include: oauth
+
 logging:
   level:
     org:
       springframework:
         security: DEBUG
+
+
 
 
 
