@@ -24,7 +24,7 @@ public class CommentService {
 	private final PostRepository postRepository;
 
 	@Transactional
-	public void writeComment(Long postId, CreateComment.Request request, String loginUser) {
+	public void writeComment(long postId, CreateComment.Request request, String loginUser) {
 
 		// 로그인한 유저 정보 가져오기
 		User user = userRepository.findByUsername(loginUser)
@@ -44,14 +44,14 @@ public class CommentService {
 
 
 	@Transactional
-	public void updateComment(Long postId, Long commentId, String newComment, String loginUser) {
+	public void updateComment(long commentId, UpdateComment.Request request, String loginUser) {
 
 		// 댓글 가져오기
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 
 		if (comment.isSameWriter(loginUser)) {
-			comment.update(newComment);
+			comment.update(request.getComment());
 			commentRepository.save(comment);
 		} else {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
@@ -59,7 +59,7 @@ public class CommentService {
 	}
 
 	@Transactional
-	public void deleteComment(Long postId, Long commentId, String loginUser) {
+	public void deleteComment(long commentId, String loginUser) {
 
 		// 댓글 가져오기
 		Comment comment = commentRepository.findById(commentId)

@@ -1,22 +1,20 @@
 package com.jeongseok.boardapp.controller;
 
+import static com.jeongseok.boardapp.util.ValidationUtil.validationRequestValue;
+
 import com.jeongseok.boardapp.dto.comment.CreateComment;
 import com.jeongseok.boardapp.dto.comment.UpdateComment;
 import com.jeongseok.boardapp.service.CommentService;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,19 +22,11 @@ public class CommentController {
 
 	private final CommentService commentService;
 
-	/**
-	 *  2023/2/23
-	 *	Validation 실패 시 프론트 단 전송 실패 - 수정해야함
-	 */
 	@PostMapping("/post/{postId}/comment")
-	public String writeComment(@PathVariable Long postId, @Valid CreateComment.Request request, Errors errors, Principal principal, Model model) {
+	public String writeComment(@PathVariable long postId, @Valid CreateComment.Request request, Errors errors, Principal principal, Model model) {
 
 		if (errors.hasErrors()) {
-			Map<String, String> validateResult = validationRequestValue(errors);
-
-			for (String key : validateResult.keySet()) {
-				model.addAttribute(key, validateResult.get(key));
-			}
+			model.addAttribute(validationRequestValue(errors));
 
 			return "redirect:/post/" + postId;
 		}
@@ -46,29 +36,23 @@ public class CommentController {
 	}
 
 	@PatchMapping("/post/{postId}/comment/{commentId}")
-	public String updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestParam String comment, Principal principal) {
+	public String updateComment(@PathVariable long postId, @PathVariable long commentId, @Valid UpdateComment.Request request, Errors errors, Principal principal, Model model) {
 
-		System.out.println(comment);
-		commentService.updateComment(postId, commentId, comment, principal.getName());
+		if (errors.hasErrors()) {
+			model.addAttribute(validationRequestValue(errors));
+
+			return "redirect:/post/" + postId;
+		}
+		commentService.updateComment(commentId, request, principal.getName());
 
 		return "redirect:/post/" + postId;
 	}
 
 	@DeleteMapping("/post/{postId}/comment/{commentId}")
-	public String deleteComment(@PathVariable Long postId, @PathVariable Long commentId, Principal principal) {
+	public String deleteComment(@PathVariable long postId, @PathVariable long commentId, Principal principal) {
 
-		commentService.deleteComment(postId, commentId, principal.getName());
+		commentService.deleteComment(commentId, principal.getName());
 
 		return "redirect:/post/" + postId;
-	}
-
-	private Map<String, String> validationRequestValue(Errors errors) {
-		Map<String, String> validateResult = new HashMap<>();
-
-		for (FieldError fieldError : errors.getFieldErrors()) {
-			validateResult.put(fieldError.getField(), fieldError.getDefaultMessage());
-		}
-
-		return validateResult;
 	}
 }
