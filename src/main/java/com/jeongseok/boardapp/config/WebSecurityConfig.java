@@ -50,6 +50,7 @@ public class WebSecurityConfig {
 				.invalidateHttpSession(true)
 			)
 			.oauth2Login()
+			.loginPage("/login")
 			.userInfoEndpoint()
 			.userService(customOAuth2UserService);
 

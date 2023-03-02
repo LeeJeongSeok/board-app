@@ -4,6 +4,7 @@ import com.jeongseok.boardapp.dto.comment.CommentDto;
 import com.jeongseok.boardapp.dto.post.CreatePost;
 import com.jeongseok.boardapp.dto.post.PostDto;
 import com.jeongseok.boardapp.dto.post.UpdatePost;
+import com.jeongseok.boardapp.dto.user.LoginUserDto;
 import com.jeongseok.boardapp.entity.Post;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.PostRepository;
@@ -11,6 +12,7 @@ import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
 import com.jeongseok.boardapp.type.UseType;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,9 @@ public class PostService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public void writePost(CreatePost.Request request, String loginUser) {
+	public void writePost(CreatePost.Request request, String userName) {
 
-		// 로그인한 유저 정보 가져오기
-		User user = userRepository.findByUsername(loginUser).get();
+		User user = userRepository.findByUsername(userName).get();
 
 		postRepository.save(Post.builder()
 			.title(request.getTitle())

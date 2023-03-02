@@ -7,13 +7,18 @@ import com.jeongseok.boardapp.dto.post.CreatePost;
 import com.jeongseok.boardapp.dto.post.PostDto;
 import com.jeongseok.boardapp.dto.post.PostInfo;
 import com.jeongseok.boardapp.dto.post.UpdatePost;
+import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.LoginUserDto;
+import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.service.PostService;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -52,7 +57,7 @@ public class PostController {
 	}
 
 	@PostMapping("/post")
-	public String writePosts(@Valid CreatePost.Request request, Errors errors, Principal principal, Model model) {
+	public String writePosts(@Valid CreatePost.Request request, Errors errors, HttpSession httpSession, Model model) {
 		if (errors.hasErrors()) {
 
 			model.addAttribute(validationRequestValue(errors));
@@ -60,7 +65,9 @@ public class PostController {
 			return "post/write";
 		}
 
-		postService.writePost(request, principal.getName());
+		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+
+		postService.writePost(request, user.getUsername());
 
 		return "redirect:/";
 	}

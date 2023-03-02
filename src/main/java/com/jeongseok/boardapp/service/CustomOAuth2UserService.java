@@ -1,10 +1,13 @@
 package com.jeongseok.boardapp.service;
 
 import com.jeongseok.boardapp.config.OAuthAttributes;
+import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.LoginUserDto;
+import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;
 import java.util.Collections;
-import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -15,12 +18,15 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
 	private final UserRepository userRepository;
+	private final HttpSession httpSession;
 
+	// 구글로 부터 받은 userRequest 데이터에 대한 후처리되는 메소드
+	// 구글로그인 버튼 -> 구글 로그인 창 -> 로그인 완료 -> code (OAuth-Client라이브러리) -> AccessToken ->
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -34,6 +40,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
 		User user = saveOrUpdate(attributes);
+
+		httpSession.setAttribute("user", CreateUser.Response.from(UserDto.fromEntity(user)));
 
 		return new DefaultOAuth2User(
 			Collections.singleton(new SimpleGrantedAuthority(user.getRoleValue())),
