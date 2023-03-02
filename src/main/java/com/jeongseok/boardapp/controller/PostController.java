@@ -89,7 +89,7 @@ public class PostController {
 	}
 
 	@PatchMapping("/post/{id}")
-	public String updatePosts(@PathVariable Long id, @Valid UpdatePost.Request request, Errors errors, Model model, Principal principal) {
+	public String updatePosts(@PathVariable Long id, @Valid UpdatePost.Request request, Errors errors, Model model, HttpSession httpSession) {
 		if (errors.hasErrors()) {
 
 			model.addAttribute(validationRequestValue(errors));
@@ -97,14 +97,19 @@ public class PostController {
 			return "post/detail";
 		}
 
-		postService.updatePost(id, principal.getName(), request);
+		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+
+		postService.updatePost(id, user.getUsername(), request);
 
 		return "redirect:/";
 	}
 
 	@DeleteMapping("/post/{id}")
-	public String deletePosts(@PathVariable Long id, Principal principal) {
-		postService.deletePost(id, principal.getName());
+	public String deletePosts(@PathVariable Long id, HttpSession httpSession) {
+
+		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+
+		postService.deletePost(id, user.getUsername());
 
 		return "redirect:/";
 	}
