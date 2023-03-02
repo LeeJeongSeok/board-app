@@ -8,6 +8,7 @@ import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.exception.UserException;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,11 +22,15 @@ public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final HttpSession httpSession;
 
 	// 시큐리티에서 별도로 관리하는 메소드
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		User user = getUser(username);
+
+		httpSession.setAttribute("user", CreateUser.Response.from(UserDto.fromEntity(user)));
+
 		return new LoginUserDto(user.getUsername(), user.getPassword());
 	}
 
