@@ -1,4 +1,4 @@
-package com.jeongseok.boardapp.dto.user;
+package com.jeongseok.boardapp.config.auth;
 
 import java.util.Collection;
 import java.util.Map;
@@ -7,13 +7,12 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginUserDto implements UserDetails, OAuth2User {
+public class CustomUserDetails implements UserDetails {
 
 	private String username;
 	private String password;
@@ -21,15 +20,9 @@ public class LoginUserDto implements UserDetails, OAuth2User {
 
 
 	// form 로그인
-	public LoginUserDto(String username, String password) {
+	public CustomUserDetails(String username, String password) {
 		this.username = username;
 		this.password = password;
-	}
-
-	// OAuth 로그인
-	public LoginUserDto(String username, Map<String, Object> attributes) {
-		this.username = username;
-		this.attributes = attributes;
 	}
 
 	@Override
@@ -67,14 +60,4 @@ public class LoginUserDto implements UserDetails, OAuth2User {
 		return true;
 	}
 
-
-	@Override
-	public Map<String, Object> getAttributes() {
-		return attributes;
-	}
-
-	@Override
-	public String getName() {
-		return null;
-	}
 }

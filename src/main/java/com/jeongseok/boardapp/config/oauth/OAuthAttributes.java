@@ -1,4 +1,4 @@
-package com.jeongseok.boardapp.config;
+package com.jeongseok.boardapp.config.oauth;
 
 import com.jeongseok.boardapp.entity.User;
 import java.util.Map;

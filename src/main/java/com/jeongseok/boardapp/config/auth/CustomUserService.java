@@ -1,7 +1,6 @@
 package com.jeongseok.boardapp.config.auth;
 
 import com.jeongseok.boardapp.dto.user.CreateUser;
-import com.jeongseok.boardapp.dto.user.LoginUserDto;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;
@@ -26,6 +25,6 @@ public class CustomUserService implements UserDetailsService {
 
 		httpSession.setAttribute("user", CreateUser.Response.from(UserDto.fromEntity(user)));
 
-		return new LoginUserDto(user.getUsername(), user.getPassword());
+		return new CustomUserDetails(user.getUsername(), user.getPassword());
 	}
 }
