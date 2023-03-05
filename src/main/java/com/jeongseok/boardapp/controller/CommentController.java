@@ -5,6 +5,7 @@ import static com.jeongseok.boardapp.util.ValidationUtil.validationRequestValue;
 import com.jeongseok.boardapp.dto.comment.CreateComment;
 import com.jeongseok.boardapp.dto.comment.UpdateComment;
 import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.service.CommentService;
 import java.security.Principal;
 import javax.servlet.http.HttpSession;
@@ -33,9 +34,9 @@ public class CommentController {
 			return "redirect:/post/" + postId;
 		}
 
-		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-		commentService.writeComment(postId, request, user.getUsername());
+		commentService.writeComment(postId, request, sessionUser.getUsername());
 
 		return "redirect:/post/" + postId;
 	}
@@ -49,9 +50,9 @@ public class CommentController {
 			return "redirect:/post/" + postId;
 		}
 
-		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-		commentService.updateComment(commentId, request, user.getUsername());
+		commentService.updateComment(commentId, request, sessionUser.getUsername());
 
 		return "redirect:/post/" + postId;
 	}
@@ -59,9 +60,9 @@ public class CommentController {
 	@DeleteMapping("/post/{postId}/comment/{commentId}")
 	public String deleteComment(@PathVariable long postId, @PathVariable long commentId, HttpSession httpSession) {
 
-		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-		commentService.deleteComment(commentId, user.getUsername());
+		commentService.deleteComment(commentId, sessionUser.getUsername());
 
 		return "redirect:/post/" + postId;
 	}

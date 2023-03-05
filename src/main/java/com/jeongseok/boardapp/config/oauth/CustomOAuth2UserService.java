@@ -1,6 +1,7 @@
 package com.jeongseok.boardapp.config.oauth;
 
 import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;
@@ -39,7 +40,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		User user = saveOrUpdate(attributes);
 
-		httpSession.setAttribute("user", CreateUser.Response.from(UserDto.fromEntity(user)));
+		httpSession.setAttribute("user", SessionUser.from(UserDto.fromEntity(user)));
 
 		return new DefaultOAuth2User(
 			Collections.singleton(new SimpleGrantedAuthority(user.getRoleValue())),

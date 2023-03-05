@@ -37,28 +37,5 @@ public class CreateUser {
 		private String phone;
 	}
 
-	@Getter
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
-	public static class Response {
-
-		private String username;
-		private String password;
-		private String name;
-		private String email;
-		private String phone;
-
-		public static Response from(UserDto userDto) {
-			return Response.builder()
-				.username(userDto.getUsername())
-				.password(userDto.getPassword())
-				.name(userDto.getName())
-				.email(userDto.getEmail())
-				.phone(userDto.getPhone())
-				.build();
-		}
-	}
-
 
 }

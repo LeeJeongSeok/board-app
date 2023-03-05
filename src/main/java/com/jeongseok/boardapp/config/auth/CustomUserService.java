@@ -1,6 +1,7 @@
 package com.jeongseok.boardapp.config.auth;
 
 import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;
@@ -23,7 +24,7 @@ public class CustomUserService implements UserDetailsService {
 		User user = userRepository.findByUsername(username)
 			.orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getDescription()));
 
-		httpSession.setAttribute("user", CreateUser.Response.from(UserDto.fromEntity(user)));
+		httpSession.setAttribute("user", SessionUser.from(UserDto.fromEntity(user)));
 
 		return new CustomUserDetails(user.getUsername(), user.getPassword());
 	}

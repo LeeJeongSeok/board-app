@@ -1,6 +1,7 @@
 package com.jeongseok.boardapp.controller;
 
 import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.dto.user.UpdateUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.service.UserService;
@@ -52,7 +53,7 @@ public class UserController {
 		// 업데이트 페이지 이동까지는 실질적으로 업데이트가 발생한 것이 아니기 때문에 CreateUser에서 Reponse가 나감
 		UserDto userDto = userService.findUserByUsername(principal.getName());
 
-		model.addAttribute("user", CreateUser.Response.from(userDto));
+		model.addAttribute("user", SessionUser.from(userDto));
 
 		return "user/update";
 	}

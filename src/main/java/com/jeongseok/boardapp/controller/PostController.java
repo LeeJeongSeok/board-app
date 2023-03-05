@@ -8,12 +8,14 @@ import com.jeongseok.boardapp.dto.post.PostDto;
 import com.jeongseok.boardapp.dto.post.PostInfo;
 import com.jeongseok.boardapp.dto.post.UpdatePost;
 import com.jeongseok.boardapp.dto.user.CreateUser;
+import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.service.PostService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -60,9 +62,9 @@ public class PostController {
 			return "post/write";
 		}
 
-		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-		postService.writePost(request, user.getUsername());
+		postService.writePost(request, sessionUser.getUsername());
 
 		return "redirect:/";
 	}
@@ -92,9 +94,9 @@ public class PostController {
 			return "post/detail";
 		}
 
-		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-		postService.updatePost(id, user.getUsername(), request);
+		postService.updatePost(id, sessionUser.getUsername(), request);
 
 		return "redirect:/";
 	}
@@ -102,9 +104,9 @@ public class PostController {
 	@DeleteMapping("/post/{id}")
 	public String deletePosts(@PathVariable Long id, HttpSession httpSession) {
 
-		CreateUser.Response user = (CreateUser.Response) httpSession.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-		postService.deletePost(id, user.getUsername());
+		postService.deletePost(id, sessionUser.getUsername());
 
 		return "redirect:/";
 	}
