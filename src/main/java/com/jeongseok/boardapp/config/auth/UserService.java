@@ -1,4 +1,4 @@
-package com.jeongseok.boardapp.service;
+package com.jeongseok.boardapp.config.auth;
 
 import com.jeongseok.boardapp.dto.user.CreateUser;
 import com.jeongseok.boardapp.dto.user.LoginUserDto;
