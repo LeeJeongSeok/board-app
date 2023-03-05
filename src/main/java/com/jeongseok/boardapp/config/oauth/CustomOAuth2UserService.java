@@ -2,7 +2,6 @@ package com.jeongseok.boardapp.config.oauth;
 
 import com.jeongseok.boardapp.config.OAuthAttributes;
 import com.jeongseok.boardapp.dto.user.CreateUser;
-import com.jeongseok.boardapp.dto.user.LoginUserDto;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;

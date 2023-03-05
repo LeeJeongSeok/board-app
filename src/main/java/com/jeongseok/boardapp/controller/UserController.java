@@ -3,7 +3,7 @@ package com.jeongseok.boardapp.controller;
 import com.jeongseok.boardapp.dto.user.CreateUser;
 import com.jeongseok.boardapp.dto.user.UpdateUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
-import com.jeongseok.boardapp.config.auth.UserService;
+import com.jeongseok.boardapp.service.UserService;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,38 +1,24 @@
-package com.jeongseok.boardapp.config.auth;
+package com.jeongseok.boardapp.service;
+
 
 import com.jeongseok.boardapp.dto.user.CreateUser;
-import com.jeongseok.boardapp.dto.user.LoginUserDto;
 import com.jeongseok.boardapp.dto.user.UpdateUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.exception.UserException;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
-import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
 
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final HttpSession httpSession;
-
-	// 시큐리티에서 별도로 관리하는 메소드
-	@Override
-	public UserDetails loadUserByUsername(String username) {
-		User user = getUser(username);
-
-		httpSession.setAttribute("user", CreateUser.Response.from(UserDto.fromEntity(user)));
-
-		return new LoginUserDto(user.getUsername(), user.getPassword());
-	}
 
 	@Transactional
 	public void joinUser(CreateUser.Request createUser) {
