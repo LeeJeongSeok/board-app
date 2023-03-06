@@ -70,7 +70,7 @@ public class PostController {
 	}
 
 	@GetMapping("/post/{id}")
-	public String detailPostsForm(@PathVariable Long id, Model model) {
+	public String detailPostsForm(@PathVariable long id, Model model) {
 
 		PostDto postDto = postService.detailPost(id);
 
@@ -86,7 +86,7 @@ public class PostController {
 	}
 
 	@PatchMapping("/post/{id}")
-	public String updatePosts(@PathVariable Long id, @Valid UpdatePost.Request request, Errors errors, Model model, HttpSession httpSession) {
+	public String updatePosts(@PathVariable long id, @Valid UpdatePost.Request request, Errors errors, Model model, HttpSession httpSession) {
 		if (errors.hasErrors()) {
 
 			model.addAttribute(validationRequestValue(errors));
@@ -102,7 +102,7 @@ public class PostController {
 	}
 
 	@DeleteMapping("/post/{id}")
-	public String deletePosts(@PathVariable Long id, HttpSession httpSession) {
+	public String deletePosts(@PathVariable long id, HttpSession httpSession) {
 
 		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 

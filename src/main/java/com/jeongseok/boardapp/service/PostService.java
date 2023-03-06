@@ -47,7 +47,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public PostDto detailPost(Long id) {
+	public PostDto detailPost(long id) {
 		Post post = postRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
@@ -61,7 +61,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public void updatePost(Long postsId, String loginUser, UpdatePost.Request request) {
+	public void updatePost(long postsId, String loginUser, UpdatePost.Request request) {
 
 		// 게시글 가져오기
 		Post post = postRepository.findById(postsId).get();
@@ -76,7 +76,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public void deletePost(Long postsId, String loginUser) {
+	public void deletePost(long postsId, String loginUser) {
 
 		// 게시글 가져오기
 		Post post = postRepository.findById(postsId).get();

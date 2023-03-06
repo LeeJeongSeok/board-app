@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CommentDto {
 
-	private Long id;
+	private long id;
 	private String comment;
 	private String createdAt;
 	private String updatedAt;
