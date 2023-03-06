@@ -24,19 +24,4 @@ public class CreatePost {
 
 	}
 
-
-	@Getter
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
-	public static class Response {
-
-		private String title;
-		private String content;
-		private User user;
-		private String createdAt;
-
-
-	}
-
 }

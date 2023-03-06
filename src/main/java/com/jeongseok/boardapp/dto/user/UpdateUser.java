@@ -31,26 +31,4 @@ public class UpdateUser {
 		@NotBlank
 		private String phone;
 	}
-
-	@Getter
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
-	public static class Response {
-		private String username;
-		private String password;
-		private String name;
-		private String email;
-		private String phone;
-
-		public static UpdateUser.Response from(UserDto userDto) {
-			return UpdateUser.Response.builder()
-				.username(userDto.getUsername())
-				.password(userDto.getPassword())
-				.name(userDto.getName())
-				.email(userDto.getEmail())
-				.phone(userDto.getPhone())
-				.build();
-		}
-	}
 }
