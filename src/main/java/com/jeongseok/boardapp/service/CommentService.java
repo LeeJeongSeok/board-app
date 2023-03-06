@@ -28,17 +28,18 @@ public class CommentService {
 
 		// 로그인한 유저 정보 가져오기
 		User user = userRepository.findByUsername(loginUser)
-			.orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getDescription()));
+			.orElseThrow(
+				() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getDescription()));
 
 		// 게시글 정보 가져오기
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
 		commentRepository.save(Comment.builder()
-				.comment(request.getComment())
-				.post(post)
-				.user(user)
-				.useType(UseType.Y)
+			.comment(request.getComment())
+			.post(post)
+			.user(user)
+			.useType(UseType.Y)
 			.build());
 	}
 
@@ -50,12 +51,12 @@ public class CommentService {
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 
-		if (comment.isSameWriter(loginUser)) {
-			comment.update(request.getComment());
-			commentRepository.save(comment);
-		} else {
+		if (!comment.isSameWriter(loginUser)) {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
+
+		comment.update(request.getComment());
+		commentRepository.save(comment);
 	}
 
 	@Transactional
@@ -65,12 +66,12 @@ public class CommentService {
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 
-		if (comment.isSameWriter(loginUser)) {
-			comment.delete(UseType.N);
-			commentRepository.save(comment);
-		} else {
+		if (!comment.isSameWriter(loginUser)) {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
+
+		comment.delete(UseType.N);
+		commentRepository.save(comment);
 
 	}
 }

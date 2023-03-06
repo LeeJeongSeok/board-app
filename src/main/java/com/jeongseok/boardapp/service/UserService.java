@@ -41,7 +41,8 @@ public class UserService {
 
 	@Transactional
 	public UserDto findUserByUsername(String username) {
-		User user = getUser(username);
+		User user = userRepository.findByUsername(username)
+			.orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getDescription()));
 
 		return UserDto.fromEntity(user);
 	}
@@ -49,10 +50,10 @@ public class UserService {
 
 	@Transactional
 	public void updateUser(UpdateUser.Request updateUser, String username) {
-		// 로그인한 유저와 디비에 저장되어 있는 유저와 일치하는지 판별
-		User user = getUser(username);
+		User user = userRepository.findByUsername(username)
+			.orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getDescription()));
 
-		// 업데이트할 내용 선언
+		// 업데이트
 		user.update(bCryptPasswordEncoder.encode(updateUser.getPassword()), updateUser.getName(),
 			updateUser.getEmail(), updateUser.getPhone());
 
@@ -64,10 +65,4 @@ public class UserService {
 		return userRepository.existsUserByUsername(username);
 	}
 
-	private User getUser(String username) throws UserException {
-		// 로그인한 유저와 디비에 저장되어 있는 유저와 일치하는지 판별
-		User user = userRepository.findByUsername(username)
-			.orElseThrow(() -> new IllegalArgumentException(ErrorCode.USER_NOT_FOUND.getDescription()));
-		return user;
-	}
 }

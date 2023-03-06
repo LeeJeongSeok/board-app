@@ -66,12 +66,12 @@ public class PostService {
 		// 게시글 가져오기
 		Post post = postRepository.findById(postsId).get();
 
-		if (post.isSameWriter(loginUser)) {
-			post.update(request.getTitle(), request.getContent());
-			postRepository.save(post);
-		} else {
+		if (!post.isSameWriter(loginUser)) {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
+
+		post.update(request.getTitle(), request.getContent());
+		postRepository.save(post);
 
 	}
 
@@ -81,11 +81,11 @@ public class PostService {
 		// 게시글 가져오기
 		Post post = postRepository.findById(postsId).get();
 
-		if (post.isSameWriter(loginUser)) {
-			post.delete(UseType.N);
-			postRepository.save(post);
-		} else {
+		if (!post.isSameWriter(loginUser)) {
 			throw new IllegalArgumentException(ErrorCode.USER_UN_MATCH.getDescription());
 		}
+
+		post.delete(UseType.N);
+		postRepository.save(post);
 	}
 }
