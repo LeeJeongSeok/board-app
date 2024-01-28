@@ -1,12 +1,11 @@
 package com.jeongseok.boardapp.config.oauth;
 
-import com.jeongseok.boardapp.dto.user.CreateUser;
 import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;
 import java.util.Collections;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

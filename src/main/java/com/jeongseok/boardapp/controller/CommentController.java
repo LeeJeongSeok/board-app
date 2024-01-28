@@ -4,12 +4,10 @@ import static com.jeongseok.boardapp.util.ValidationUtil.validationRequestValue;
 
 import com.jeongseok.boardapp.dto.comment.CreateComment;
 import com.jeongseok.boardapp.dto.comment.UpdateComment;
-import com.jeongseok.boardapp.dto.user.CreateUser;
 import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.service.CommentService;
-import java.security.Principal;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -16,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
@@ -28,13 +27,11 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-			.csrf().disable()
-			.authorizeHttpRequests((requests) -> requests
-				.antMatchers(HttpMethod.POST, "/post").authenticated()
-				.antMatchers(HttpMethod.PATCH, "/post/**").authenticated()
-				.antMatchers(HttpMethod.DELETE, "/post/**").authenticated()
-				.antMatchers("/", "/join", "/post/**").permitAll()
+		http.authorizeHttpRequests((requests) -> requests
+				.requestMatchers(HttpMethod.POST, "/post").authenticated()
+				.requestMatchers(HttpMethod.PATCH, "/post/**").authenticated()
+				.requestMatchers(HttpMethod.DELETE, "/post/**").authenticated()
+				.requestMatchers("/", "/join", "/post/**").permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -44,11 +41,11 @@ public class WebSecurityConfig {
 			.logout((logout) -> logout.permitAll()
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true)
-			)
-			.oauth2Login()
-			.loginPage("/login")
-			.userInfoEndpoint()
-			.userService(customOAuth2UserService);
+			);
+//			.oauth2Login()
+//			.loginPage("/login")
+//			.userInfoEndpoint()
+//			.userService(customOAuth2UserService);
 
 		return http.build();
 	}

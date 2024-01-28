@@ -1,12 +1,11 @@
 package com.jeongseok.boardapp.config.auth;
 
-import com.jeongseok.boardapp.dto.user.CreateUser;
 import com.jeongseok.boardapp.dto.user.SessionUser;
 import com.jeongseok.boardapp.dto.user.UserDto;
 import com.jeongseok.boardapp.entity.User;
 import com.jeongseok.boardapp.repository.UserRepository;
 import com.jeongseok.boardapp.type.ErrorCode;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

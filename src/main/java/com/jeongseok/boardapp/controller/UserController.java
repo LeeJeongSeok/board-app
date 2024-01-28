@@ -8,7 +8,7 @@ import com.jeongseok.boardapp.service.UserService;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,7 +1,6 @@
 package com.jeongseok.boardapp.dto.post;
 
-import com.jeongseok.boardapp.entity.User;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
