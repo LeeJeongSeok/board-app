@@ -1,5 +1,7 @@
 package com.jeongseok.boardapp.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import com.jeongseok.boardapp.config.oauth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 
@@ -42,13 +43,16 @@ public class WebSecurityConfig {
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true)
 			);
-//			.oauth2Login()
-//			.loginPage("/login")
-//			.userInfoEndpoint()
-//			.userService(customOAuth2UserService);
+//			.formLogin(form -> form
+//				.loginPage("/user/login")
+//				.permitAll());
+//			.oauth2Login(withDefaults());
+		
 
 		return http.build();
 	}
+
+
 
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
